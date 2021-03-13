@@ -6,7 +6,9 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import SettingsPanel from './components/SettingsPanel';
 import Footer from './components/Footer';
+import Dashboard from './components/Dashboard';
 import { withTranslation } from "react-i18next";
+import Leaderboard from './components/Leaderboard';
 
 class App extends Component {
   state = {}
@@ -22,12 +24,10 @@ class App extends Component {
       <div className="container-scroller">
         { navbarComponent }
         <div className="container-fluid page-body-wrapper">
-          
-          <div className="main-panel">
-
-            { footerComponent }
-          </div>
+          <Dashboard />
+        
         </div>
+        { footerComponent }
       </div>
     );
   }
