@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import Dashboard from './components/Dashboard';
 import { withTranslation } from "react-i18next";
 import Leaderboard from './components/Leaderboard';
+import Discussion from '../app/Discussion/Discussion';
+ee1f1c9671cb89952bf573d61008a8ae1f684fa4
 
 class App extends Component {
   state = {}
@@ -24,8 +26,11 @@ class App extends Component {
       <div className="container-scroller">
         { navbarComponent }
         <div className="container-fluid page-body-wrapper">
-          <Dashboard />
-        
+          
+          <div className="main-panel">
+            <Discussion/>
+            { footerComponent }
+        </div>
         </div>
         { footerComponent }
       </div>
