@@ -5,7 +5,7 @@ import { ProgressBar } from 'react-bootstrap';
 
 function ProblemPage(props) {
     return (
-        <div>
+        <div className="main-panel">
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">

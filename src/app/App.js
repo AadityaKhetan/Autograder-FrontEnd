@@ -10,7 +10,8 @@ import Dashboard from './components/Dashboard';
 import { withTranslation } from "react-i18next";
 import Leaderboard from './components/Leaderboard';
 import Discussion from '../app/Discussion/Discussion';
-ee1f1c9671cb89952bf573d61008a8ae1f684fa4
+import Submissions from '../app/Discussion/Submisssions';
+
 
 class App extends Component {
   state = {}
@@ -27,9 +28,9 @@ class App extends Component {
         { navbarComponent }
         <div className="container-fluid page-body-wrapper">
           
-          <div className="main-panel">
-            <Discussion/>
-            { footerComponent }
+          <div >
+            <Dashboard />
+           
         </div>
         </div>
         { footerComponent }

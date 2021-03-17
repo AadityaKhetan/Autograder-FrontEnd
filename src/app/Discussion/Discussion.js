@@ -11,7 +11,8 @@ function Discussion() {
     const [text, setText] = useState("")
 
     return (
-        <div>
+    
+        <div className="main-panel" >
             <div>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
