@@ -34,10 +34,10 @@ function Discussion() {
                             <Link><h2 className="font-weight-light pl-5 pr-5">Problem</h2></Link>
                         </td>
                         <td>
-                            <Link><h2 className="font-weight-light pl-5 pr-5">Submissions</h2></Link>
+                            <Link to="/submission"><h2 className="font-weight-light pl-5 pr-5">Submissions</h2></Link>
                         </td>
                         <td>
-                            <Link><h2 className="font-weight-light pl-5 pr-5">Discussion</h2></Link>
+                            <Link to="/discusison"><h2 className="font-weight-light pl-5 pr-5">Discussion</h2></Link>
                         </td>
                     </tr>
                 </table>

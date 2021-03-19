@@ -31,6 +31,12 @@ const Register1 = lazy(() => import('./user-pages/Register'));
 const Lockscreen = lazy(() => import('./user-pages/Lockscreen'));
 
 const BlankPage = lazy(() => import('./general-pages/BlankPage'));
+const ProblemsList = lazy(() => import('./general-pages/ProblemList'));
+const Faculty = lazy(()=>import('./general-pages/Faculty'));
+const AddClass = lazy(()=>import('./general-pages/faculty-pages/AddClass'));
+const Subject = lazy(()=>import('./general-pages/faculty-pages/Subject'));
+const AssignmentReport = lazy(()=>import('./general-pages/faculty-pages/AssignmentReport'));
+const Classes = lazy(()=>import('./general-pages/Classes'));
 
 
 
@@ -67,6 +73,13 @@ class AppRoutes extends Component {
           <Route path="/error-pages/error-500" component={ Error500 } />
 
           <Route path="/general-pages/blank-page" component={ BlankPage } />
+          <Route path="/general-pages/problem-list" component={ ProblemsList } />
+          <Route path="/general-pages/faculty" component={ Faculty } />
+          <Route path="/general-pages/faculty-pages/add-class" component={AddClass}/>
+          
+          <Route path="/general-pages/faculty-pages/subject/:subject" component={Subject}/>
+          <Route path="/general-pages/faculty-pages/problem/:problem" component={AssignmentReport}/>
+          <Route path="/courses" component={Classes}/>
 
 
           <Redirect to="/dashboard" />

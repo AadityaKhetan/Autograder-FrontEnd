@@ -7,7 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 
 ReactDOM.render(
-  <BrowserRouter basename="/demo/purple-react-free/template/demo_1/preview">
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 , document.getElementById('root'));

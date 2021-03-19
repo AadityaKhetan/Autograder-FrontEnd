@@ -110,3 +110,48 @@
 @import "../assets/styles/footer";
 @import "../assets/styles/layout";
 @import "../assets/styles/settings-panel";
+
+/* start */
+
+.error-1 {
+    color: red;
+  }
+  
+  .splitScreen {
+    position: relative;
+    width: 100%;
+  }
+  
+  .leftPane, .rightPane {
+      position: relative;
+      width: 50%;
+      height: 100%;
+  }
+  
+  .root-main {font-size:1rem;}
+  
+  @media (min-width: 544px) {  
+    .root-main {font-size:2rem;}
+  }
+   
+  @media (min-width: 768px) {  
+    .root-main {font-size:2.2rem;}
+  }
+   
+  @media (min-width: 992px) { 
+    .root-main {font-size:2.5rem;}
+  }
+   
+  @media (min-width: 1200px) {  
+    .root-main {font-size:3rem;}
+  }
+  
+  @media (min-width: 950px) and (max-width:1100px) { 
+    .root-main {font-size:2.75rem;} 
+  }
+  
+  .text-responsive {
+    font-size: calc(100% + 1vw + 1vh);
+  }
+  
+  /* end */
