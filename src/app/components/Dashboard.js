@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Container,Col,Row,Card,ListGroup,ListGroupItem,ProgressBar } from 'react-bootstrap';
 
 class Dashboard extends Component {
+  
  render(){
    return(
      <div class="main-panel">
