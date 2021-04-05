@@ -10,42 +10,67 @@ import {
 	Row,
 	Jumbotron,
 } from "reactstrap";
+import axios from 'axios'
+import backend_url from '../services/api'
 
 class Signup extends Component {
 	constructor() {
 		super();
 		this.state = {
-			input: {},
-			errors: {},
+			firstName:'',
+			lastName:'',
+			mobile:'',
+			email:'',
+			password:'',
+			role:'',
+			
 		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		
 	}
 
-	handleChange(event) {
-		let input = this.state.input;
-		input[event.target.name] = event.target.value;
-		this.setState({
-			input,
-		});
-	}
-
-	handleSubmit(event) {
-		event.preventDefault();
-
-		if (this.validate()) {
-			console.log(this.state);
-
-			let input = {};
-			input["email"] = "";
-			input["password"] = "";
-			this.setState({ input: input });
-			alert("Created Account successfully...");
+	handleChange = e => {
+		//console.log(e.target.name)
+		this.setState({ [e.target.name]: e.target.value })
+		if(e.target.name == "email"){
+			//console.log(e.target.value);
+			var studentEmail = new RegExp("@charusat.edu.in");
+			var facultyEmail = new RegExp("@charusat.ac.in");
+			if(studentEmail.test(e.target.value)){
+				this.setState({role:'student'})
+			}
+			if(facultyEmail.test(e.target.value)){
+				this.setState({role:'teacher'})
+			}
 		}
 	}
 
+	handleSubmit = e => {
+		e.preventDefault();
+
+		//if (this.validate()) 
+			console.log(this.state);
+			axios.post(`${backend_url}/signup`,this.state).then((response) =>{
+				console.log(response)
+				if(response.status===200){
+					alert("Created Account successfully...");
+				}
+				
+			},
+			(err)=>{
+				alert(err.status)
+				if(err.status===409){
+					alert("user already exists");
+				}else{
+					alert("There was some problem. Please try again later")
+				}
+			}
+			);
+			
+		
+	}
+
 	validate() {
-		let input = this.state.input;
+		let input = this.state.email;
 		let errors = {};
 		let isValid = true;
 		var studentEmail = new RegExp("@charusat.edu.in");
@@ -59,16 +84,14 @@ class Signup extends Component {
 			errors["email"] = "Please enter Charusat email.";
 		}
 
-		if (!input["email"]) {
+		if (!input) {
 			isValid = false;
 			errors["email"] = "Please enter your email Address.";
-		}
-
-		if (typeof input["email"] !== "undefined") {
+		}else{
 			var pattern = new RegExp(
 				/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i
 			);
-			if (!pattern.test(input["email"])) {
+			if (!pattern.test(input)) {
 				isValid = false;
 				errors["email"] = "Please enter valid email address.";
 			}
@@ -81,6 +104,7 @@ class Signup extends Component {
 	}
 
 	render() {
+		const { firstName, lastName, mobile, email, password } = this.state
 		const jumbotronStyle = {
 			backgroundColor: "white",
 			borderRadius: "50px",
@@ -149,15 +173,13 @@ class Signup extends Component {
 						<center>
 							<Jumbotron
 								className="jumbotron"
-								style={jumbotronStyle}
-							>
+								style={jumbotronStyle}>
 								<center>
 									<h1 style={head1Style}>Sign Up</h1>
 								</center>
 								<Form
 									onSubmit={this.handleSubmit}
-									className="form"
-								>
+									className="form">
 									<Col>
 										<FormGroup>
 											<h4 style={head4Style}>Email</h4>
@@ -166,15 +188,10 @@ class Signup extends Component {
 													type="email"
 													name="email"
 													id="exampleEmail"
-													value={
-														this.state.input.email
-													}
+													value={email}
 													onChange={this.handleChange}
 													style={inputStyle}
 												/>
-												<div className="error-1">
-													{this.state.errors.email}
-												</div>
 											</div>
 										</FormGroup>
 									</Col>
@@ -187,30 +204,43 @@ class Signup extends Component {
 													type="password"
 													name="password"
 													id="examplePassword"
+													onChange={this.handleChange}
 													style={inputStyle}
+													value={password}
 												/>
 											</div>
 										</FormGroup>
-										<h3 style={verifyEmailStyle}>
-											Check your Email to Verify:
-										</h3>
-									</Col>
-									<Col>
-										<h1 style={head2Style}>
-											Personal Info
-										</h1>
 									</Col>
 									<Col>
 										<FormGroup>
 											<h4 style={head4Style}>
-												Display Name
+												First Name
 											</h4>
 											<div align="left">
 												<Input
 													type="text"
-													name="email"
+													name="firstName"
 													id="exampleEmail"
+													onChange={this.handleChange}
 													style={inputStyle}
+													value={firstName}
+												/>
+											</div>
+										</FormGroup>
+									</Col>
+									<Col>
+										<FormGroup>
+											<h4 style={head4Style}>
+												Last Name
+											</h4>
+											<div align="left">
+												<Input
+													type="text"
+													name="lastName"
+													id="exampleEmail"
+													onChange={this.handleChange}
+													style={inputStyle}
+													value={lastName}
 												/>
 											</div>
 										</FormGroup>
@@ -224,20 +254,10 @@ class Signup extends Component {
 											<div align="left">
 												<Input
 													type="phone"
+													name="mobile"
+													onChange={this.handleChange}
 													style={inputStyle}
-												/>
-											</div>
-										</FormGroup>
-									</Col>
-									<Col>
-										<FormGroup>
-											<h4 style={head4Style}>
-												Area of Interests
-											</h4>
-											<div align="left">
-												<Input
-													type="phone"
-													style={inputStyle}
+													value={mobile}
 												/>
 											</div>
 										</FormGroup>

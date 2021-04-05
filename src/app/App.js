@@ -12,7 +12,6 @@ import Leaderboard from './components/Leaderboard';
 import Discussion from '../app/Discussion/Discussion';
 import Submissions from '../app/Discussion/Submisssions';
 import Classes from './general-pages/Classes';
-import Login from './user-pages/Login';
 import MainLogin from './components/MainLogin';
 import MainSignUp from './components/MainSignUp';
 import ProblemList from './general-pages/ProblemList';
@@ -49,15 +48,10 @@ class App extends Component {
             </div>
             <Footer />
           </BrowserRouter>
-          
-        
         
       </div>
     );
   }
-
-  
-
 }
 
 export default withTranslation() (withRouter(App));

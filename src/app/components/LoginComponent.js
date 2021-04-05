@@ -9,7 +9,10 @@ import {
 	Row,
 	Jumbotron,
 } from "reactstrap";
-import { Link,useHistory } from "react-router-dom";
+import { Link,useHistory,Redirect } from "react-router-dom";
+import axios from 'axios';
+import backend_url from '../services/api'
+
 
 class Login extends Component {
 
@@ -19,37 +22,49 @@ class Login extends Component {
 		
 		super();
 		this.state = {
-			input: {},
-			errors: {},
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	handleChange(event) {
-		let input = this.state.input;
-		input[event.target.name] = event.target.value;
-		this.setState({
-			input,
-		});
-	}
-
-	handleSubmit(event) {
-		const setpath="/loginSuccess"
-		
-		event.preventDefault();
-
-		if (this.validate()) {
-			console.log(this.state);
-
-			let input = {};
-			input["email"] = "";
-			this.setState({ input: input });
-			alert("Logged In successfully...");
-			console.log("Before history");
+			email:'',
+			password:'',
+			redirect: null
 			
+		};
+		
+		
+
+	}
+
+	handleChange = (e) => {
+		this.setState({ [e.target.name]: e.target.value })
+	}
+
+	handleSubmit = (event) => {
+		event.preventDefault();
+		//const history = useHistory();
+		console.log(this.state);
+		axios.post(`${backend_url}/login`,this.state).then(
+			(response)=>{
+				if(response.status===200){
+					alert("Login successfull")
+					localStorage.setItem('user_id',response.data);//storing user_id in local storage
+                    this.setState({ redirect: "/loginSuccess" });
+				}
+			},
+			(err)=>{
+				alert(err.status)
+				if(err.status===400){
+					alert("Please check your password")
+				}else if(err.status===404){
+					alert("User with this email id doesn't exists")
+				}else{
+					alert("There was some problem. Please try again later.");
+				}
+			}
+			
+		);
+
+			console.log("Before history");
+			const setpath="/loginSuccess"
 			console.log("After history");
-		}
+		
 	}
 
 	validate() {
@@ -89,7 +104,9 @@ class Login extends Component {
 	}
 
 	render() {
-		
+
+		//const history = useHistory();
+		const { email, password } = this.state
 		const jumbotronStyle = {
 			backgroundColor: "white",
 			borderRadius: "50px",
@@ -132,6 +149,9 @@ class Login extends Component {
 			marginTop: "40px",
 			marginBottom: "25px",
 		};
+		if (this.state.redirect) {
+			return <Redirect to={this.state.redirect} />
+		  }
 
 		return (
 			<Container>
@@ -156,16 +176,11 @@ class Login extends Component {
 												<Input
 													type="email"
 													name="email"
-													id="exampleEmail"
-													value={
-														this.state.input.email
-													}
+													value={email}
 													onChange={this.handleChange}
 													style={inputStyle}
 												/>
-												<div className="error-1">
-													{this.state.errors.email}
-												</div>
+												
 											</div>
 										</FormGroup>
 									</Col>
@@ -177,8 +192,9 @@ class Login extends Component {
 												<Input
 													type="password"
 													name="password"
-													id="examplePassword"
 													style={inputStyle}
+													onChange={this.handleChange}
+													value={password}
 												/>
 											</div>
 										</FormGroup>
