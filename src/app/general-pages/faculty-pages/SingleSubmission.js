@@ -4,7 +4,7 @@ import { MDBJumbotron, MDBContainer, MDBInput, MDBBtn } from "mdbreact";
 import React, { Component } from 'react'
 
 
-export class SignleSubmission extends Component{
+class SingleSubmission extends Component{
     render(){
         return (
 
@@ -42,4 +42,4 @@ export class SignleSubmission extends Component{
     
 
 
-export default SignleSubmission
+export default SingleSubmission

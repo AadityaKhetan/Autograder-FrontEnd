@@ -9,7 +9,7 @@ import {
 	Row,
 	Jumbotron,
 } from "reactstrap";
-import { Link,useHistory,Redirect } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import axios from 'axios';
 import backend_url from '../services/api'
 
@@ -61,9 +61,7 @@ class Login extends Component {
 			
 		);
 
-			console.log("Before history");
-			const setpath="/loginSuccess"
-			console.log("After history");
+			
 		
 	}
 

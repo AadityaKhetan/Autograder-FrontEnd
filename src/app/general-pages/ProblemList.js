@@ -1,11 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, useState } from 'react'
 import { Dropdown } from "react-bootstrap";
 import ProblemService from "../services/ProblemService";
+import {  Button, Modal, Form } from 'react-bootstrap';
+import DatePicker from "react-datepicker";
+import {Redirect } from "react-router-dom";
+import backend_url from '../services/api'
+import axios from 'axios'
+import Problem from '../components/Problem'
 
-export class ProblemList extends Component {
+class ProblemList extends Component {
 
+	
 		state = {
-			// problems: [],
+			problems: [],
+			redirect: null,
 			bookmarkIcon: "mdi mdi-bookmark-outline",
 			taskCompleted: false,
 			filters: [
@@ -37,13 +45,18 @@ export class ProblemList extends Component {
 				},
 			],
 		};
-	// componentDidMount() {
-	// 	ProblemService.getProblem().then((response) => {
-    //         this.setState({
-    //             problems: response.data
-    //         });
-	// 	});
-	// }
+	componentDidMount() {
+		axios.get(`${backend_url}/problems`).then
+			(response =>{
+				console.log(response)
+				this.setState({problems:response.data})
+				console.log(this.state.problems)
+			})
+			.catch(err =>{
+				console.log(err)
+			}) 
+		
+	}
 
 	changeBookmark = () => {
 		if (this.state.bookmarkIcon === "mdi mdi-bookmark")
@@ -51,7 +64,15 @@ export class ProblemList extends Component {
 		else this.setState({ bookmarkIcon: "mdi mdi-bookmark" });
 	};
 
+	addProblem = () =>{
+		this.setState({ redirect: "/addproblem" });
+	}
+
 	render() {
+		if (this.state.redirect) {
+			return <Redirect to={this.state.redirect} />
+		  }
+		  const {problems} = this.state
 		return (
 			<div className="main-panel">
 				<div className="row">
@@ -74,6 +95,9 @@ export class ProblemList extends Component {
 						</div>
 					</div>
 					<div className="col-lg-2 grid-margin strech-card">
+						<Button className="btn btn-primary btn-sm" variant="primary" onClick={this.addProblem}>
+		  					Add a problem
+	  					</Button>
 						<Dropdown>
 							<Dropdown.Toggle
 								variant="btn btn-primary btn-sm"
@@ -86,66 +110,19 @@ export class ProblemList extends Component {
 								<Dropdown.Item>Z-A</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
+						
 					</div>
 				</div>
 				<div className="row">
                     <div className="col-lg-8 grid-margin strech-card">
-                        
-						{/* Problem def. */}
-                        {/* {
-                            this.state.problems.map((problem) => (
-                                      
-                                // <div>
-                                //     <p key={problem.id}>{ problem.id }</p>
-                                // </div>
-
-                                <div className="row">
-                                    <div className="col-sm-12 grid-margin stretch-card">
-                                        <div class="card text-white bg-dark mb-3">
-                                            <div class="card-header" key={problem.title}>
-                                                {problem.title}
-                                                <label
-                                                    className="badge badge-primary"
-                                                    style={{ float: "right" }}
-                                                >
-                                                    <i className="mdi mdi-star" />
-                                                    <i className="mdi mdi-star" />
-                                                    <i className="mdi mdi-star" />
-                                                    <i className="mdi mdi-star-outline" />
-                                                    <i className="mdi mdi-star-outline" />
-                                                </label>
-                                            </div>
-                                            <div class="card-body">
-                                                <div className="row">
-                                                    <span class="col card-text">
-                                                        <ul className="list-inline">
-                                                            <li>
-                                                                <i className="mdi mdi-bullseye"></i>{problem.difficulty}
-                                                            </li>
-                                                            <li>
-                                                                <i className=" mdi mdi-account-box-outline"></i>
-                                                                {problem.author.firstName}
-                                                            </li>
-                                                            <li></li>
-                                                            <li>Topics-list</li>
-                                                        </ul>
-                                                    </span>
-                                                    <button
-                                                        style={{ float: "right", height: "32px" }}
-                                                        className="col-lg-4 btn btn-danger btn-sm"
-                                                    >
-                                                        Solve Challenge
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))
-                        } */}
+						{
+							problems.length ?
+							problems.map(problem => 
+							<Problem key ={problem.id} singleProblem={problem}/>
+								):null
+						}
 					</div>
 
-					{/* filters */}
 					<div className="col-lg-4 grid-margin stretch-card">
 						<div className="card">
 							<div className="card-body">

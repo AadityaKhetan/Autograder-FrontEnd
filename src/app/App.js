@@ -20,6 +20,8 @@ import AddClass from './general-pages/faculty-pages/AddClass'
 import Subject from './general-pages/faculty-pages/Subject'
 import AssignmentReport from './general-pages/faculty-pages/AssignmentReport'
 import SignleSubmission from './general-pages/faculty-pages/SingleSubmission'
+import AddProblem from './components/AddProblem';
+import AddTestCases from './components/AddTestCases';
 
 
 class App extends Component {
@@ -37,6 +39,8 @@ class App extends Component {
               <Route path="/loginSuccess" component={Dashboard} exact/>
               <Route path="/courses" component={Classes} exact/>
               <Route path="/practice" component={ProblemList} exact/>
+              <Route path="/addProblem" component={AddProblem} exact/>
+              <Route path="/addTestCases" component={AddTestCases} exact/>
               <Route path="/faculty" component={Faculty} exact/>
               <Route path="/discussion" component={Discussion} exact/>
               <Route path="/submission" component={Submissions} exact/>

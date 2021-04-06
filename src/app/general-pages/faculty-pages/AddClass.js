@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Form,Icon } from 'react-bootstrap';
 
-export class AddClass extends Component {
+class AddClass extends Component {
   render() {
     return (
       <div className="main-panel">
