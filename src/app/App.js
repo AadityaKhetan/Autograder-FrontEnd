@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter,Route, useParams,Switch,withRouter} from 'react-router-dom'
 import './App.scss';
 
@@ -22,6 +23,7 @@ import AssignmentReport from './general-pages/faculty-pages/AssignmentReport'
 import SignleSubmission from './general-pages/faculty-pages/SingleSubmission'
 import AddProblem from './components/AddProblem';
 import AddTestCases from './components/AddTestCases';
+import MainProblemPage from './components/MainProblemPage';
 
 
 class App extends Component {
@@ -44,6 +46,7 @@ class App extends Component {
               <Route path="/faculty" component={Faculty} exact/>
               <Route path="/discussion" component={Discussion} exact/>
               <Route path="/submission" component={Submissions} exact/>
+              <Route path="/problem" component={MainProblemPage} exact/>
               <Route path="/general-pages/faculty-pages/add-class" component={AddClass}/>
               <Route path="/general-pages/faculty-pages/subject/:subject" component={Subject}/>
               <Route path="/general-pages/faculty-pages/problem/:problem" component={AssignmentReport}/>

@@ -1,8 +1,9 @@
 import React from "react"
+import { useHistory } from "react-router-dom";
 
 const Problem = ({ singleProblem }) => {
 
-
+    const history = useHistory();
     
 
     return(
@@ -27,7 +28,11 @@ const Problem = ({ singleProblem }) => {
                                 <li>{singleProblem.category}</li>
                             </ul>
                         </span>
-                        <button style={{ float: "right", height: "32px" }} className="col-lg-4 btn btn-danger btn-sm">
+                        <button style={{ float: "right", height: "32px" }} className="col-lg-4 btn btn-danger btn-sm"
+                        onClick={()=>{
+                            localStorage.setItem('problemId',singleProblem.id)
+                            history.push("/problem");
+                        }}>
                             Solve Challenge
                         </button>
                     </div>

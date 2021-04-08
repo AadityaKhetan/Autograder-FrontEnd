@@ -27,7 +27,7 @@ class AddProblem extends Component {
 
   handleFileChange = e => {
     e.preventDefault();
-		console.log(e.target.files[0])
+		//console.log(e.target.files[0])
     //console.log(typeof(e.target.files))
 		this.setState({ solution : e.target.files[0] })
     //console.log(this.state.solution)
