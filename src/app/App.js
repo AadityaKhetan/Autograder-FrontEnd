@@ -47,6 +47,7 @@ class App extends Component {
               <Route path="/discussion" component={Discussion} exact/>
               <Route path="/submission" component={Submissions} exact/>
               <Route path="/problem" component={MainProblemPage} exact/>
+              <Route path="/leaderboard" component ={Leaderboard} exact/>
               <Route path="/general-pages/faculty-pages/add-class" component={AddClass}/>
               <Route path="/general-pages/faculty-pages/subject/:subject" component={Subject}/>
               <Route path="/general-pages/faculty-pages/problem/:problem" component={AssignmentReport}/>

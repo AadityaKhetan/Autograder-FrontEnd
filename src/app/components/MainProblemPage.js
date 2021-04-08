@@ -14,7 +14,7 @@ import ProblemDefinitionPage from "./ProblemDefinitionPage";
 import SubmissionComponent from "./SubmissionComponent";
 import DiscussionComponent from "./DiscussionComponent";
 
-const MainProblemPage = (props) => {
+const MainProblemPage = () => {
 	const [activeTab, setActiveTab] = useState("1");
 
 	const toggle = (tab) => {

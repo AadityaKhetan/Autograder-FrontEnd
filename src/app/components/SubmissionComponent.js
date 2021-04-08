@@ -4,15 +4,19 @@ import { ProgressBar } from 'react-bootstrap';
 import backend_url from '../services/api';
 import axios from 'axios';
 
-const SubmissionComponent = (props) => {
+const SubmissionComponent = () => {
 
   useEffect(() => {
+    console.log("In submission tab")
     getAllSubmissions();
+    initCount();
  }, []);
 
  const getAllSubmissions = () =>{
+   console.log("in method getAllSubmssions")
    const problemId = localStorage.getItem('problemId')
-  axios.get(`${backend_url}/problem/${problemId}/testCases`).then(
+   const userId = localStorage.getItem('user_id')  
+   axios.get(`${backend_url}/user/${userId}/problem/${problemId}/viewSolutions`).then(
       (response) =>{
           console.log(response)
           setSubmissions(response.data);
@@ -25,17 +29,19 @@ const SubmissionComponent = (props) => {
   );
 };
 
-
+const initCount =()=>{
+  setCount(0)
+}
 
 const [submissions,setSubmissions]=useState([])
+let [count,setCount]=useState([])
 
     return (
         <div className="main-panel">
-            <div className="container sm-12 pl-5">
-                <h4 className="font-weight-light">You have submitted 1 solution.</h4>
-            </div>
-
-            <div className="col-xl-12 grid-margin stretch-card">
+          <div className="container sm-12 pl-5">
+            <h4 className="font-weight-light">You have not submitted {submissions.length} solutions.</h4>
+        </div>
+        <div className="col-xl-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
                 <h4 className="card-title">Submissions</h4>
@@ -52,22 +58,29 @@ const [submissions,setSubmissions]=useState([])
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td> 1 </td>
-                        <td> Accepted </td>
+          {
+            submissions.length > 0?submissions.map(submission =>
+                      <tr key={submission.id}>
+                        <td> {++count} </td>
+                        <td> {submission.testCasesPassed}/{submission.testCasesPassed + submission.testCasesFailed} </td>
                         <td>
-                          <ProgressBar variant="success" now={100} />
+                          {submission.score}
                         </td>
-                        <td> Python 3 </td>
-                        <td> 10/03/2021 </td>
+                        <td> {submission.languageUsed} </td>
+                        <td> {submission.solutionSubmittedOn} </td>
                         <td> <Link>View Results</Link> </td>
                       </tr>
-                    </tbody>
+                    
+          )
+             : null
+          }
+          </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
+            
 
           <div className="container">
                 <nav aria-label="...">

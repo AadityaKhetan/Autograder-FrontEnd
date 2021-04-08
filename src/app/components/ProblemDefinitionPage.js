@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container,Jumbotron } from "reactstrap";
 import Editor from "react-simple-code-editor";
+import {Redirect } from "react-router-dom";
 // import { highlight, languages } from "prismjs/components/prism-core";
 // import "prismjs/components/prism-clike";
 // import "prismjs/components/prism-javascript";
@@ -56,7 +57,8 @@ class ProblemDefinitionPage extends Component {
 		state = {
 			problems: {},
 			language:'',
-			testCases:[]
+			testCases:[],
+
 		}
 
 
@@ -109,9 +111,13 @@ class ProblemDefinitionPage extends Component {
         alert(err);
       }
     )
+
+	
+	
 	}
 
 	render() {
+		
 		const { problems,testCases } = this.state
 
 		const pDescriptionStyle = {
