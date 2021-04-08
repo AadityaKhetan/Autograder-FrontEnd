@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import TimeKeeper from 'react-timekeeper';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import axios from 'axios';
+import background_url from '../../services/api.js';
 export class Subject extends Component {
   // function 
   state = {
@@ -19,21 +22,31 @@ export class Subject extends Component {
         progress: 20,
         status: 'Open'
       }
-    ]
+    ],
+    code: '',
   }
   render() {
+    
     const { match: { params } } = this.props;
+    console.log(params.subject);
+    const subject = params.subject.substring(0,params.subject.indexOf('-'));
+    const code = params.subject.substring(1+params.subject.indexOf('-'));
     return (
-      <div className="main-panel">
+      <div className="main-panel" style={{ marginLeft: 100, marginTop: 20 }}>
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
               <i className="mdi mdi-account-box"></i>
-            </span> Parth Shah {">"} {params.subject} </h3>
+            </span> {subject} </h3>
           <nav aria-label="breadcrumb">
             <ul className="breadcrumb">
               <li className="breadcrumb-item active" aria-current="page">
-                <span></span>
+                <Members/>
+                <span>&nbsp;&nbsp;&nbsp; </span>
+                <CopyToClipboard text={code}>
+                  <button className="btn btn-primary btn-sm" style={{ cursor: 'pointer'  }}><b>Class Code: {code}</b></button>
+                </CopyToClipboard>
+                <span>&nbsp;&nbsp;&nbsp; </span>
                 <ShowModal />
 
               </li>
@@ -114,7 +127,7 @@ function ShowModal() {
 
   return (
     <>
-      <Button className="btn btn-primary btn-sm" variant="primary" onClick={handleShow}>
+      <Button className="btn btn-dark btn-sm" variant="primary" onClick={handleShow}>
         Add an assignment
     </Button>
       {/* <button className="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Add an assignment</button> */}
@@ -154,13 +167,13 @@ function ShowModal() {
             <Form.Group className="row">
               <label htmlFor="exampleInputPassword2" className="col-sm-3 col-form-label">Due date</label>
               <div className="col-sm-9">
-                <DatePicker className="form-control w-100" id="exampleInputPassword2" placeholderText="date" value={new Date().now}/>
+                <DatePicker className="form-control w-100" id="exampleInputPassword2" placeholderText="date" value={new Date().now} />
               </div>
             </Form.Group>
             <Form.Group className="row">
               <label htmlFor="exampleInputConfirmPassword2" className="col-sm-3 col-form-label">Public comments</label>
               <div className="col-sm-9">
-              <br/>
+                <br />
                 <Form.Check
                   type="switch"
                   id="custom-switch"
@@ -183,6 +196,56 @@ function ShowModal() {
             Add
         </Button>
         </Modal.Footer> */}
+      </Modal>
+    </>
+  );
+}
+const Members=(props)=>{
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  return(
+    <>
+      <Button className="btn btn-primary btn-sm" onClick={handleShow}>View Members</Button>
+      <Modal scrollable show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Members</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>Teachers</h5>
+          <ul style={{listStyleType:"none"}}>
+            <li>1</li>
+            <li>1</li>
+            <li>1</li>
+          </ul>
+          <h5>Students</h5>
+          <ul style={{listStyleType:"none"}}>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </Modal.Body>
       </Modal>
     </>
   );

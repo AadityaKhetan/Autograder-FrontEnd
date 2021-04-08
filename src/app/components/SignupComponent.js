@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import {
 	Container,
 	Col,
@@ -23,6 +23,7 @@ class Signup extends Component {
 			email:'',
 			password:'',
 			role:'',
+			redirect:null
 			
 		};
 		
@@ -53,6 +54,7 @@ class Signup extends Component {
 				console.log(response)
 				if(response.status===200){
 					alert("Created Account successfully...");
+					this.setState('redirect',"/login")
 				}
 				
 			},
@@ -104,6 +106,9 @@ class Signup extends Component {
 	}
 
 	render() {
+		if (this.state.redirect) {
+			return <Redirect to={this.state.redirect} />
+		  }
 		const { firstName, lastName, mobile, email, password } = this.state
 		const jumbotronStyle = {
 			backgroundColor: "white",

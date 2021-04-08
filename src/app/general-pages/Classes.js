@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component,useState } from 'react';
 import { Link } from 'react-router-dom';
 import backend_url from '../services/api'
 import axios from 'axios'
+import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
 
 export class Classes extends Component {
     state = {
@@ -20,12 +21,32 @@ export class Classes extends Component {
             }
         )
     }
+
+    handleJoinSubmit=()=>{
+        console.log(this.state.code);
+        axios.post(backend_url+ "/user/" + localStorage.getItem("user_id") + "/classes/joinClass?classCode="+this.state.classCode,null).then((response)=>{
+          alert('class added')
+        }).catch((err)=>{
+          console.log(err);
+          alert(err);
+        });
+      }
+
     render() {
         const {classes} = this.state
         return (
             <div className="main-panel">
                 <div className="page-header">
                 </div>
+                <nav aria-label="breadcrumb">
+            <ul className="breadcrumb">
+              <li className="breadcrumb-item active" aria-current="page">
+                <span></span>
+                <ShowModal joinHandler={this.handleJoinChange} submitHandler={this.handleJoinSubmit} />
+                &nbsp;&nbsp;&nbsp;
+              </li>
+            </ul>
+          </nav>
                 <div className="row">
                     {
                         classes.length ?
@@ -58,4 +79,38 @@ const ClassCard = ({class_}) => {
         </>
     )
 }
+
+const ShowModal = (props) => {
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    return (<>
+      <Button className="btn btn-primary btn-sm" variant="primary" onClick={handleShow}>
+        Join Class
+     </Button>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Join Class with Code</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+  
+          <form className="forms-sample" onSubmit={(event)=>{event.preventDefault(); props.submitHandler();}}>
+            <Form.Group className="row">
+              <div className="col-sm-9">
+                <Form.Control type="text" className="form-control" id="exampleInputUsername2" placeholder="enter class code here" onChange={(e)=>{props.joinHandler(e.target.value)}} />
+              </div>
+              <button type="submit" className="btn btn-gradient-primary mr-2" onClick={handleClose}>Join</button>
+            </Form.Group>
+          </form>
+  
+  
+        </Modal.Body>
+  
+      </Modal>
+    </>);
+  }
+
+
 export default Classes;
+
+
