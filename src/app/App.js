@@ -39,7 +39,7 @@ class App extends Component {
               <Route path="/login" component={MainLogin} exact/>
               <Route path="/signup" component={MainSignUp} exact/>
               <Route path="/loginSuccess" component={Dashboard} exact/>
-              <Route path="/courses" component={Classes} exact/>
+              <Route path="/classes" component={Classes} exact/>
               <Route path="/practice" component={ProblemList} exact/>
               <Route path="/addProblem" component={AddProblem} exact/>
               <Route path="/addTestCases" component={AddTestCases} exact/>

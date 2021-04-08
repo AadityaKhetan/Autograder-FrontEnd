@@ -44,8 +44,11 @@ class Login extends Component {
 			(response)=>{
 				if(response.status===200){
 					alert("Login successfull")
-					localStorage.setItem('user_id',response.data);//storing user_id in local storage
-                    this.setState({ redirect: "/loginSuccess" });
+					localStorage.setItem('user_id',response.data.id);//storing user_id in local storage
+                    if(response.data.role === "student")
+						this.setState({ redirect: "/loginSuccess" });
+					else
+						this.setState({redirect: "/faculty"})
 				}
 			},
 			(err)=>{
