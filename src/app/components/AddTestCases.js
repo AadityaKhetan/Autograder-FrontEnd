@@ -3,7 +3,7 @@ import { Form,Icon } from 'react-bootstrap';
 import { Link, Redirect } from "react-router-dom";
 import backend_url from '../services/api'
 import axios from 'axios'
-
+import Navbar from './Navbar'
 
 class AddTestCases extends Component {
 
@@ -30,7 +30,6 @@ class AddTestCases extends Component {
       addIO = (e) =>{
         
         this.output = e.target.value
-        //this.count++
         console.log(this.input)
         console.log(this.output)
         //console.log(this.count)
@@ -97,7 +96,8 @@ class AddTestCases extends Component {
     return (
         
 
-      <div className="main-panel">
+      <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+        <Navbar />
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">

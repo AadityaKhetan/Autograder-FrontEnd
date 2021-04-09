@@ -13,6 +13,7 @@ import classnames from "classnames";
 import ProblemDefinitionPage from "./ProblemDefinitionPage";
 import SubmissionComponent from "./SubmissionComponent";
 import DiscussionComponent from "./DiscussionComponent";
+import Navbar from './Navbar'
 
 const MainProblemPage = () => {
 	const [activeTab, setActiveTab] = useState("1");
@@ -25,6 +26,7 @@ const MainProblemPage = () => {
 
 	return (
         <Container>
+			<Navbar />
 			<Nav tabs>
 				<NavItem>
 					<NavLink

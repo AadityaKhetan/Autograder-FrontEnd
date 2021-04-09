@@ -7,6 +7,7 @@ import {Redirect } from "react-router-dom";
 import backend_url from '../services/api'
 import axios from 'axios'
 import Problem from '../components/Problem'
+import Navbar from '../components/Navbar'
 
 class ProblemList extends Component {
 
@@ -74,7 +75,8 @@ class ProblemList extends Component {
 		  }
 		  const {problems} = this.state
 		return (
-			<div className="main-panel">
+			<div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+				<Navbar />
 				<div className="row">
 					<div className="col-lg-10">
 						<div className="col-lg-12 search-field d-none d-md-block">

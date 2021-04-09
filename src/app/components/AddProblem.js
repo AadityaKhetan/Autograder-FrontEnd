@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Form,Icon } from 'react-bootstrap'
 import { Link, Redirect } from "react-router-dom"
 import backend_url from '../services/api'
+import Navbar from './Navbar'
 
 class AddProblem extends Component {
 
@@ -65,7 +66,8 @@ class AddProblem extends Component {
       const {title,statement,numOfTestCases,difficulty,category,score}=this.state
 
     return (
-      <div className="main-panel">
+      <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+        <Navbar />
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">

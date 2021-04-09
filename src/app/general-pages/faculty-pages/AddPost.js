@@ -9,19 +9,22 @@ export class AddClass extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
+      title: '',
       description: '',
-      ownerId: localStorage.getItem("user_id"),
       redirect: null
     }
   }
   createClass = (event) => {
     event.preventDefault();
-    axios.post(backend_url+"/user/" + this.state.ownerId + "/createClass", this.state).then((response) => {
+    let ownerId=localStorage.getItem("user_id")
+    let classId=localStorage.getItem("class_id")
+    axios.post(backend_url+"/user/" + ownerId + "/class/" + classId + "/newPost", this.state).then((response) => {
       console.log(response);
-      if (response.status == 200)
-        alert('Class Created');
-      this.setState({ redirect: '/faculty' });
+      if (response.status == 200){
+        localStorage.setItem('post_id',response.data)
+        this.setState({ redirect: '/addAssignmentProblems' });
+      }
+        
     }, (err) => {
       alert(err.status)
       if (err.status === 400) {
@@ -49,8 +52,8 @@ export class AddClass extends Component {
               <h4 className="card-title">Fill up the form</h4>
               <form className="forms-sample" onSubmit={this.createClass}>
                 <Form.Group>
-                  <label htmlFor="exampleInputName1">Class Name</label>
-                  <Form.Control type="text" className="form-control" id="exampleInputName1" onChange={this.changeState} value={this.state.name} name="name" placeholder="Class Name" required/>
+                  <label htmlFor="exampleInputName1">Title</label>
+                  <Form.Control type="text" className="form-control" id="exampleInputName1" onChange={this.changeState} value={this.state.title} name="title" placeholder="Class Name" required/>
                 </Form.Group>
                 <Form.Group>
                   <label htmlFor="exampleTextarea1">Description</label>

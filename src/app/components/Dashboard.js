@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import {Container,Col,Row,Card,ListGroup,ListGroupItem,ProgressBar } from 'react-bootstrap';
+import Navbar from './Navbar';
 
 class Dashboard extends Component {
   
  render(){
    return(
-     <div class="main-panel">
+     <div class="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+        <Navbar />
        <Container fluid>
   <Row>
     <Col sm={4}>

@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import backend_url from '../services/api.js';
+import Navbar from '../components/Navbar'
+
 export class AddProblem extends Component {
   constructor() {
     super();
@@ -46,6 +48,7 @@ export class AddProblem extends Component {
   render() {
     return (
       <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+        <Navbar />
         <div className="page-header">
          
           <nav aria-label="breadcrumb">
@@ -68,7 +71,7 @@ export class AddProblem extends Component {
               this.state.classes.map((title, index) => {
                 console.log(title.name);
                 console.log(index);
-                return (<ClassCard key={index} name={title.name} description={title.description} classCode={title.classCode} />);
+                return (<ClassCard key={index} name={title.name} description={title.description} classCode={title.classCode} classId={title.id} />);
               })
             }
           </div>)
@@ -79,7 +82,7 @@ export class AddProblem extends Component {
   }
 }
 const ClassCard = (props) => {
-  const setpath = "/general-pages/faculty-pages/subject/" + props.name + "-" + props.classCode;
+  const setpath = "/general-pages/faculty-pages/subject/"+props.classId +"-"+ props.name + "-" + props.classCode;
   return (
     <>
 

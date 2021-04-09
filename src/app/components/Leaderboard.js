@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import {Container,Form,Col,Row,Card,ListGroup,ListGroupItem,ProgressBar } from 'react-bootstrap';
 import backend_url from '../services/api'
+import Navbar from './Navbar';
 class Leaderboard extends Component {
 
   state={
@@ -27,7 +28,8 @@ class Leaderboard extends Component {
       let count=0
 
         return(
-            <div class="main-panel">                
+            <div class="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>    
+                <Navbar />            
                 <div className="col-lg-12 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">

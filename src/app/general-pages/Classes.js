@@ -1,12 +1,13 @@
 import React, { Component,useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import backend_url from '../services/api'
 import axios from 'axios'
 import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
-
+import Navbar from '../components/Navbar';
 export class Classes extends Component {
     state = {
-        classes:[]
+        classes:[],
+        classCode:'',
     }
 
     componentDidMount(){
@@ -22,6 +23,13 @@ export class Classes extends Component {
         )
     }
 
+    handleJoinChange=(e)=>{
+      console.log(e);
+      this.setState({
+        classCode:e
+      });
+    }
+
     handleJoinSubmit=()=>{
         console.log(this.state.code);
         axios.post(backend_url+ "/user/" + localStorage.getItem("user_id") + "/classes/joinClass?classCode="+this.state.classCode,null).then((response)=>{
@@ -35,7 +43,8 @@ export class Classes extends Component {
     render() {
         const {classes} = this.state
         return (
-            <div className="main-panel">
+            <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+              <Navbar />
                 <div className="page-header">
                 </div>
                 <nav aria-label="breadcrumb">
@@ -60,8 +69,9 @@ export class Classes extends Component {
     }
 }
 const ClassCard = ({class_}) => {
-    
-    const setpath = "/general-pages/faculty-pages/subject/" + class_.name;
+
+  
+    const setpath = "/general-pages/class/" + class_.id;
     return (
         <>
 
@@ -72,7 +82,7 @@ const ClassCard = ({class_}) => {
                         <h6 class="card-title text-white">{class_.name}</h6>
                     </div>
                     <div className="card-footer">
-                        <a href="#" className="btn btn-danger btn-sm" style={{ float: 'right' }}>Enter class</a>
+                    <Link to={{ pathname: setpath}} style={{ textDecoration: 'none' }}><Button>Enter Class</Button></Link>
                     </div>
                 </div>
             </div>
@@ -97,7 +107,8 @@ const ShowModal = (props) => {
           <form className="forms-sample" onSubmit={(event)=>{event.preventDefault(); props.submitHandler();}}>
             <Form.Group className="row">
               <div className="col-sm-9">
-                <Form.Control type="text" className="form-control" id="exampleInputUsername2" placeholder="enter class code here" onChange={(e)=>{props.joinHandler(e.target.value)}} />
+                <Form.Control type="text" className="form-control" id="exampleInputUsername2" placeholder="enter class code here"
+                 onChange={(e)=>{props.joinHandler(e.target.value)}} />
               </div>
               <button type="submit" className="btn btn-gradient-primary mr-2" onClick={handleClose}>Join</button>
             </Form.Group>

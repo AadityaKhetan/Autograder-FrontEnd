@@ -450,3 +450,16 @@ class Buttons extends Component {
 }
 
 export default Buttons;
+
+
+
+
+{/* <div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <Link className="navbar-brand brand-logo" to={"/classes"}>Home</Link>
+</div>
+<div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <Link className="navbar-brand brand-logo" to={"/practice"}>Practice</Link>
+</div>
+<div className="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+          <Link className="navbar-brand brand-logo" to={"/leaderboard"}>Leaderboard</Link>
+</div> */}

@@ -21,9 +21,12 @@ import AddClass from './general-pages/faculty-pages/AddClass'
 import Subject from './general-pages/faculty-pages/Subject'
 import AssignmentReport from './general-pages/faculty-pages/AssignmentReport'
 import SignleSubmission from './general-pages/faculty-pages/SingleSubmission'
+import AddPost from './general-pages/faculty-pages/AddPost'
+import AddAssignmentProblems from './general-pages/faculty-pages/AddAssignmentProblems'
 import AddProblem from './components/AddProblem';
 import AddTestCases from './components/AddTestCases';
 import MainProblemPage from './components/MainProblemPage';
+import SingleClass from './general-pages/SingleClass';
 
 
 class App extends Component {
@@ -32,7 +35,6 @@ class App extends Component {
     return (
       <div className="container-scroller">
         <BrowserRouter>
-        <Navbar />
         <div className="container-fluid page-body-wrapper">
             <Switch>
               <Route path="/" component={HomePage} exact/>
@@ -52,6 +54,9 @@ class App extends Component {
               <Route path="/general-pages/faculty-pages/subject/:subject" component={Subject}/>
               <Route path="/general-pages/faculty-pages/problem/:problem" component={AssignmentReport}/>
               <Route path="/general-pages/faculty-pages/viewSolution" component={SignleSubmission}/>
+              <Route path="/addPost" component={AddPost} />
+              <Route path="/addAssignmentProblems" component={AddAssignmentProblems} />
+              <Route path="/general-pages/class/:classId" component={SingleClass}/>
             </Switch>
             </div>
             <Footer />

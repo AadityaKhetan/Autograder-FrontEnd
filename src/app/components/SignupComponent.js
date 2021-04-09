@@ -54,7 +54,7 @@ class Signup extends Component {
 				console.log(response)
 				if(response.status===200){
 					alert("Created Account successfully...");
-					this.setState('redirect',"/login")
+					this.setState({redirect:"/login"})
 				}
 				
 			},

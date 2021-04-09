@@ -1,11 +1,13 @@
 import React, { Component, useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link,Redirect } from "react-router-dom";
 import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
 import DatePicker from "react-datepicker";
 import TimeKeeper from 'react-timekeeper';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import axios from 'axios';
 import background_url from '../../services/api.js';
+import Navbar from '../../components/Navbar';
+
 export class Subject extends Component {
   // function 
   state = {
@@ -24,15 +26,44 @@ export class Subject extends Component {
       }
     ],
     code: '',
+    classId:'',
+    students:[],
+    teachers:[],
+    redirect:null
+  }
+
+  getMembers=(classID)=>{
+    // console.log(10);
+    axios.get(background_url+"/class/"+classID+"/students").then((response)=>{
+      console.log(response.data);
+      this.setState({students:response.data});
+    });
+    axios.get(background_url+"/class/"+classID+"/teachers").then((response)=>{
+      console.log(response.data);
+      this.setState({teachers:response.data});
+    });
+  }
+
+  addPost = () =>{
+    this.setState({ redirect: "/addPost" });
   }
   render() {
+
+    if (this.state.redirect) {
+			return <Redirect to={this.state.redirect} />
+		  }
     
-    const { match: { params } } = this.props;
-    console.log(params.subject);
-    const subject = params.subject.substring(0,params.subject.indexOf('-'));
-    const code = params.subject.substring(1+params.subject.indexOf('-'));
+      const {match:{ params } } = this.props;
+      const classId = params.subject.substring(0,params.subject.indexOf('-'));
+      console.log(classId)
+
+      localStorage.setItem('class_id',classId)
+      const temp = params.subject.substring(params.subject.indexOf('-')+1);
+      const subject = temp.substring(0,temp.indexOf('-'));
+      const code = temp.substring(1+temp.indexOf('-'));
     return (
       <div className="main-panel" style={{ marginLeft: 100, marginTop: 20 }}>
+        <Navbar />
         <div className="page-header">
           <h3 className="page-title">
             <span className="page-title-icon bg-gradient-primary text-white mr-2">
@@ -41,13 +72,15 @@ export class Subject extends Component {
           <nav aria-label="breadcrumb">
             <ul className="breadcrumb">
               <li className="breadcrumb-item active" aria-current="page">
-                <Members/>
+                <Members teachers={this.state.teachers} students={this.state.students} getAllMembers={this.getMembers} cId={classId}/>
                 <span>&nbsp;&nbsp;&nbsp; </span>
                 <CopyToClipboard text={code}>
                   <button className="btn btn-primary btn-sm" style={{ cursor: 'pointer'  }}><b>Class Code: {code}</b></button>
                 </CopyToClipboard>
                 <span>&nbsp;&nbsp;&nbsp; </span>
-                <ShowModal />
+                <Button className="btn btn-primary btn-sm" variant="primary" onClick={this.addPost}>
+		  					  Add post
+	  					  </Button>
 
               </li>
             </ul>
@@ -202,8 +235,9 @@ function ShowModal() {
 }
 const Members=(props)=>{
   const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {setShow(true); props.getAllMembers(props.cId); };
   const handleClose = () => setShow(false);
+  const {teachers,students} = props;
   return(
     <>
       <Button className="btn btn-primary btn-sm" onClick={handleShow}>View Members</Button>
@@ -212,38 +246,17 @@ const Members=(props)=>{
           <Modal.Title>Members</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h5>Teachers</h5>
+          <h5>Teachers({teachers.length})</h5>
           <ul style={{listStyleType:"none"}}>
-            <li>1</li>
-            <li>1</li>
-            <li>1</li>
+            {teachers.map((val,index)=>{
+              return <li>{val.firstName+' '+val.lastName}</li>;
+            })}
           </ul>
-          <h5>Students</h5>
+          <h5>Students({students.length})</h5>
           <ul style={{listStyleType:"none"}}>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+          {students.map((val,index)=>{
+              return <li>{val.firstName+' '+val.lastName}</li>;
+            })}
           </ul>
         </Modal.Body>
       </Modal>
