@@ -18,8 +18,9 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import backend_url from '../services/api';
-import axios from 'axios'
+import axios from 'axios';
 
+import SimpleEditor from './MonacoEditor';
 
 function CodeEditor() {
 	const [code, setCode] = React.useState(
@@ -157,7 +158,8 @@ class ProblemDefinitionPage extends Component {
 			</div>
 
 				<h3 style={codepenStyle} align="left">Your CodePen</h3>
-				 {/* <CodeEditor /> */}
+				{/* <CodeEditor /> */}
+				<SimpleEditor />
 				<Form onSubmit={this.addSolution}> 
 					<FormGroup style={formgrpStyle} align="left">
 						<DropdownButton
