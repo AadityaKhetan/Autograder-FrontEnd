@@ -2,24 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Footer extends Component {
-  render () {
+  render() {
     return (
-      <footer className="footer">
-        
-          
 
-          <div className="navbar-menu-wrapper d-flex align-items-stretch">
-          
-          <ul>
-          <li className="nav-item nav-logout d-none d-lg-block"><span className="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.charusat.ac.in/cspit/it/" target="_blank" rel="noopener noreferrer">Charotar University </a>2020</span></li>
-          <li className="nav-item nav-logout d-none d-lg-block">
+      <footer className="container-fluid footer align-items-center justify-content-center">
+
+          <div class="footer-copyright text-center">
+          <span>Copyright © <a href="https://www.charusat.ac.in/cspit/it/">Charotar University </a>2021</span>
+          <p></p>
           <Link className="navbar-brand " to="/">Home</Link>
           <Link className="navbar-brand " to="/">Scoring System</Link>
           <Link className="navbar-brand " to="/">About us</Link>
           <Link className="navbar-brand " to="/">Contact us</Link>
-          
-          </li>
-          </ul>
 
           </div>
         
