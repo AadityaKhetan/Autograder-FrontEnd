@@ -4,6 +4,7 @@ import { ProgressBar, Button, Modal, Form } from 'react-bootstrap';
 import axios from 'axios';
 import backend_url from '../services/api.js';
 import Navbar from '../components/Navbar'
+import Error404 from '../error-pages/Error404'
 
 export class AddProblem extends Component {
   constructor() {
@@ -12,9 +13,26 @@ export class AddProblem extends Component {
       classCode:'',
       classes: [
       ],
-      isEmpty: true
+      isEmpty: true,
+      isFaculty: false
     }
+    this.getUserAuthority();
     this.getClasses();
+  }
+  getUserAuthority = () =>{
+    if(localStorage.getItem("user_id")!=null) {
+      
+      axios.get(backend_url+'/user/'+localStorage.getItem("user_id")).then((response)=>{
+        
+        if(response.data.role==='student'){
+          this.setState({isFaculty:false})
+        }else{
+          this.setState({isFaculty:true})
+        }
+      }).catch((err)=>{
+        alert(err);
+      })
+    }
   }
   getClasses = () => {
     axios.get(backend_url + "/user/" + localStorage.getItem("user_id") + "/classes").then((response) => {
@@ -46,39 +64,48 @@ export class AddProblem extends Component {
     });
   }
   render() {
-    return (
-      <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
-        <Navbar />
-        <div className="page-header">
-         
-          <nav aria-label="breadcrumb">
-            <ul className="breadcrumb">
-              <li className="breadcrumb-item active" aria-current="page">
-                <span></span>
-                <ShowModal joinHandler={this.handleJoinChange} submitHandler={this.handleJoinSubmit} />
-                &nbsp;&nbsp;&nbsp;
-                <span></span>
-                <Link to="/general-pages/faculty-pages/add-class">
-                  <button className="btn btn-primary btn-sm">Add Class</button>
-                </Link>
-              </li>
-            </ul>
-          </nav>
+    if(this.state.isFaculty===true){
+      return (
+        <div className="main-panel" style={{ marginTop: 20, marginLeft: 100 }}>
+          <Navbar />
+          <div className="page-header">
+           
+            <nav aria-label="breadcrumb">
+              <ul className="breadcrumb">
+                <li className="breadcrumb-item active" aria-current="page">
+                  <span></span>
+                  <ShowModal joinHandler={this.handleJoinChange} submitHandler={this.handleJoinSubmit} />
+                  &nbsp;&nbsp;&nbsp;
+                  <span></span>
+                  <Link to="/general-pages/faculty-pages/add-class">
+                    <button className="btn btn-primary btn-sm">Add Class</button>
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          {(!this.state.isEmpty) ?
+            (<div className="row">
+              {
+                this.state.classes.map((title, index) => {
+                  console.log(title.name);
+                  console.log(index);
+                  return (<ClassCard key={index} name={title.name} description={title.description} classCode={title.classCode} classId={title.id} />);
+                })
+              }
+            </div>)
+            : (<><h1 style={{ color: '#C6C6C6', marginLeft: "50%" }}>No class exist</h1></>)
+          }
         </div>
-        {(!this.state.isEmpty) ?
-          (<div className="row">
-            {
-              this.state.classes.map((title, index) => {
-                console.log(title.name);
-                console.log(index);
-                return (<ClassCard key={index} name={title.name} description={title.description} classCode={title.classCode} classId={title.id} />);
-              })
-            }
-          </div>)
-          : (<><h1 style={{ color: '#C6C6C6', marginLeft: "50%" }}>No class exist</h1></>)
-        }
-      </div>
-    )
+      )
+    }else{
+      return(
+        <diV>
+          <Error404 />
+        </diV>
+      )
+    }
+    
   }
 }
 const ClassCard = (props) => {

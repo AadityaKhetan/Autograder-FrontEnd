@@ -10,19 +10,26 @@ class Navbar extends Component {
     this.state = {
       userName: '',
       isLoggedIn: false,
-      redirect:null
+      redirect:null,
+      isFaculty: false
     }
     this.checkState();
   }
   checkState=()=>{
     if(localStorage.getItem("user_id")!=null) {
-      // this.setState({userName:localStorage.getItem("user_id"),isLoggedIn:true});
+      
       axios.get(background_url+'/user/'+localStorage.getItem("user_id")).then((response)=>{
         console.log(response.data);
         this.setState({userName:response.data.firstName+' '+response.data.lastName});
         this.setState({isLoggedIn:true})
+        if(response.data.role==='student'){
+          this.setState({isFaculty:false})
+        }else{
+          this.setState({isFaculty:true})
+        }
         console.log(this.state.isLoggedIn)
         console.log(this.state.userName)
+        console.log("user is faculty " + this.state.isFaculty)
       }).catch((err)=>{
         alert(err);
       })
@@ -85,7 +92,8 @@ class Navbar extends Component {
                     <Dropdown.Menu className="navbar-dropdown">
                       <Dropdown.Item href="/loginSuccess" onClick={evt => evt.preventDefault()}>
                         <i className="mdi mdi-cached mr-2 text-success"></i>
-                        <Link to="/faculty"><Trans>My Profile</Trans></Link>
+                        {(this.state.isFaculty === true)?<Link to="/faculty"><Trans>My Profile</Trans></Link>:<Link to="/loginSuccess"><Trans>My Profile</Trans></Link>}
+                        
                       </Dropdown.Item>
                       
                     </Dropdown.Menu>
